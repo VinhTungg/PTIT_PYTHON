@@ -1,22 +1,24 @@
-#MLE
+import heapq
+import re
 
-def find_three_numbers(a):
-    num1 = 1e18
-    num2 = 1e18
-    num3 = 1e18
-    for num in a:
-        if num < num1:
-            num3 = num2
-            num2 = num1
-            num1 = num
-        elif num < num2:
-            num3 = num2
-            num2 = num
-        elif num < num3:
-            num3 = num
-    return [num1, num2, num3]
-
-for _ in range(int(input())):
+t = int(input())
+for z in range(t) :
     n = int(input())
-    a = list(map(int, input().split()))
-    print(sum(find_three_numbers(a)))
+    main = ' ' + input().replace(' ', '  ') + ' '
+    a = []
+    i = -8
+    while i < 9 and len(a) < 4:
+        s = '\d' * abs(i) + ' '
+        if i < 0 :
+            s = '-' + s
+        elif i > 0 :
+            s = ' ' + s
+        else :
+            i += 1
+            continue
+        a += [int(x) for x in re.findall(s, main)]
+        i += 1
+    ans = 0
+    for x in heapq.nsmallest(3, a):
+        ans += x
+    print(ans)
